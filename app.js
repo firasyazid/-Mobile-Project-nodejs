@@ -19,9 +19,11 @@ app.options('*',cors ());
 
 
 const collaboraterRouter = require('./routes/collaboraters');
+const serviceRouter = require ('./routes/services');
 
 //Routes 
 app.use(`${api}/collaboraters`, collaboraterRouter);
+app.use(`${api}/services`, serviceRouter);
 
 
 

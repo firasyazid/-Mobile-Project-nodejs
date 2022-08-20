@@ -55,4 +55,25 @@ router.delete('/:id', (req, res)=>{
     })
 })
 
+
+router.put('/:id',async (req, res)=> {
+    const collaborater = await Collaborater.findByIdAndUpdate(
+        req.params.id,
+        {
+            name: req.body.name,
+            lastname: req.body.lastname,
+            location: req.body.location,
+            phone: req.body.phone,
+            image: req.body.image,
+
+        },
+        { new: true}
+    )
+
+    if(!collaborater)
+    return res.status(400).send('the collaborater cannot be created!')
+
+    res.send(collaborater);
+})
+
 module.exports =router;
