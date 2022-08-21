@@ -5,6 +5,10 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    email: {
+        type: String,
+        required: true,
+    },
      
     passwordHash: {
         type: String,
@@ -17,7 +21,7 @@ const userSchema = new mongoose.Schema({
     isAdmin: {
         type: Boolean,   
     },
-    location: {
+    adress: {
         type: String,
         default: ''
     },

@@ -20,10 +20,13 @@ app.options('*',cors ());
 
 const collaboraterRouter = require('./routes/collaboraters');
 const serviceRouter = require ('./routes/services');
+const userRouter = require ('./routes/user');
+
 
 //Routes 
 app.use(`${api}/collaboraters`, collaboraterRouter);
 app.use(`${api}/services`, serviceRouter);
+app.use(`${api}/users`, userRouter);
 
 
 
