@@ -4,6 +4,8 @@ const morgan = require('morgan');
  const mongoose = require('mongoose');
 const cors = require('cors');
 require('dotenv/config');
+const authJwt = require('./middleware/jwt');
+const errorHandler = require('./middleware/error');
 
 
 const api = process.env.API_URL;
@@ -16,6 +18,11 @@ app.use(morgan('tiny'));
 app.use(express.json()); 
 app.use(cors()); 
 app.options('*',cors ());
+app.use(authJwt());
+app.use(errorHandler);
+
+
+
 
 
 const collaboraterRouter = require('./routes/collaboraters');
