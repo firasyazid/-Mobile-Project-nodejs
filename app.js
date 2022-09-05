@@ -22,19 +22,16 @@ app.use(authJwt());
 app.use(errorHandler);
 
 
-
-
-
 const collaboraterRouter = require('./routes/collaboraters');
 const serviceRouter = require ('./routes/services');
 const userRouter = require ('./routes/user');
-
+const orderRouter = require ('./routes/orders');
 
 //Routes 
 app.use(`${api}/collaboraters`, collaboraterRouter);
 app.use(`${api}/services`, serviceRouter);
 app.use(`${api}/users`, userRouter);
-
+app.use(`${api}/orders`, orderRouter);
 
 
 

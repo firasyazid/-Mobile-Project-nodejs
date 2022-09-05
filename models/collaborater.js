@@ -16,7 +16,6 @@ const collaboraterSchema = mongoose.Schema({
     },
 
     image:{ 
-
         type:String,
     }
     
