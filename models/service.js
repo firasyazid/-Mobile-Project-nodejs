@@ -5,8 +5,9 @@ const serviceSchema = mongoose.Schema({
         type: String,
      },
     price: {
-        type: String,
-    },
+        type: Number,
+        default: 0,
+     },
     
  })
 

@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const orderSchema = mongoose.Schema({
-
+    
     orderItems: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'OrderItem',
@@ -18,14 +18,17 @@ const orderSchema = mongoose.Schema({
      },
 
     totalPrice: {
-        type: String,
+        type: Number,
+        default: 0,
+
      },
    
     status: {
         type: String,
      },   
+
      date: {
-        type: String, 
+        type: Date,
     },
 })
 
