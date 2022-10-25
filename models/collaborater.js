@@ -17,7 +17,13 @@ const collaboraterSchema = mongoose.Schema({
 
     image:{ 
         type:String,
-    }
+    }, 
+    
+    category: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Category',
+        required:true
+    },
     
      
 })

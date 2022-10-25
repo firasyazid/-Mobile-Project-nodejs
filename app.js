@@ -26,12 +26,14 @@ const collaboraterRouter = require('./routes/collaboraters');
 const serviceRouter = require ('./routes/services');
 const userRouter = require ('./routes/user');
 const orderRouter = require ('./routes/orders');
+const categoryRouter= require ('./routes/categories');
 
 //Routes 
 app.use(`${api}/collaboraters`, collaboraterRouter);
 app.use(`${api}/services`, serviceRouter);
 app.use(`${api}/users`, userRouter);
 app.use(`${api}/orders`, orderRouter);
+app.use(`${api}/categories`, categoryRouter);
 
 
 
