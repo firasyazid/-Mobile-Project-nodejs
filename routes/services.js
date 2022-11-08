@@ -1,7 +1,8 @@
 const {Service} = require('../models/service');
 const express = require('express');
 const router = express.Router();
- 
+const { Category } = require('../models/categories');
+
  
 
 router.get(`/`, async (req, res) =>{
@@ -24,10 +25,16 @@ router.get('/:id', async(req,res)=>{
 
 
 router.post('/', async (req,res)=>{
+
+
+    const category = await Category.findById(req.body.category);
+    if (!category) return res.status(400).send('Invalid Category');
+
     let service = new Service({
         name: req.body.name,
         price: req.body.price,
- 
+        category: req.body.category
+
     })
     service = await service.save();
 

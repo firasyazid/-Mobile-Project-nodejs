@@ -1,7 +1,8 @@
 const {Collaborater} = require('../models/collaborater');
 const express = require('express');
 const router = express.Router();
- 
+const { Category } = require('../models/categories');
+
  
 
 router.get(`/`, async (req, res) =>{
@@ -25,13 +26,17 @@ router.get('/:id', async(req,res)=>{
 
 
 router.post('/', async (req,res)=>{
+    
+    const category = await Category.findById(req.body.category);
+    if (!category) return res.status(400).send('Invalid Category');
+
     let collaborater = new Collaborater({
         name: req.body.name,
         lastname: req.body.lastname,
         location: req.body.location,
         phone: req.body.phone,
-        image: req.body.image
-
+        image: req.body.image,
+        category: req.body.category,
     })
     collaborater = await collaborater.save();
 
