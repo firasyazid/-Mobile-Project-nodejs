@@ -11,8 +11,7 @@ const serviceSchema = mongoose.Schema({
      category: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Category',
-        required:true
-    },
+     },
  })
 
    serviceSchema.virtual('id').get(function () {

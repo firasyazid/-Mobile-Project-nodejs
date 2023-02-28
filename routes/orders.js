@@ -2,22 +2,25 @@ const {Order} = require('../models/order');
 const express = require('express');
 const { OrderItem } = require('../models/orderItems');
 const router = express.Router();
+const {Service}= require('../models/service');
+
 
 router.get(`/`, async (req, res) =>{
-    const orderList = await Order.find().populate('user', 'name').sort({'dateOrdered': -1});
+    const orderList = await Order.find().populate('user','name') 
+    .sort({'dateOrdered': -1});
 
     if(!orderList) {
         res.status(500).json({success: false})
     } 
     res.send(orderList);
 })
-
+ 
 router.get(`/:id`, async (req, res) =>{
     const order = await Order.findById(req.params.id)
-    .populate('user', 'name')
+    .populate('user', 'name phone')
     .populate({ 
         path: 'orderItems', populate: {
-            path : 'service'} 
+            path : 'service', populate: 'category'} 
         });
 
     if(!order) {
@@ -25,6 +28,7 @@ router.get(`/:id`, async (req, res) =>{
     } 
     res.send(order);
 })
+ 
 
 
 router.post('/', async (req,res)=>{
@@ -107,5 +111,13 @@ router.get(`/get/userorders/:userid`, async (req, res) =>{
     } 
     res.send(userOrderList);
 })
-
+router.get(`/get/count`, async (req, res) =>{
+    const userCount = await Order.countDocuments()
+    if(!userCount) {
+        res.status(500).json({success: false})
+    } 
+    res.send({
+        userCount: userCount
+    });
+})
 module.exports =router;

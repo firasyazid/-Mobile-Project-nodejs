@@ -6,11 +6,8 @@ const cors = require('cors');
 require('dotenv/config');
 const authJwt = require('./middleware/jwt');
 const errorHandler = require('./middleware/error');
-
-
 const api = process.env.API_URL;
 
- 
 
 //Middleware
 
@@ -27,6 +24,8 @@ const serviceRouter = require ('./routes/services');
 const userRouter = require ('./routes/user');
 const orderRouter = require ('./routes/orders');
 const categoryRouter= require ('./routes/categories');
+const codeRouter= require ('./routes/codepromo');
+
 
 //Routes 
 app.use(`${api}/collaboraters`, collaboraterRouter);
@@ -34,6 +33,7 @@ app.use(`${api}/services`, serviceRouter);
 app.use(`${api}/users`, userRouter);
 app.use(`${api}/orders`, orderRouter);
 app.use(`${api}/categories`, categoryRouter);
+app.use(`${api}/codepromo`, codeRouter);
 
 
 

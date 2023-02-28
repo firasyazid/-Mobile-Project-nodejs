@@ -4,15 +4,41 @@ const router = express.Router();
 const { Category } = require('../models/categories');
 
  
-
 router.get(`/`, async (req, res) =>{
-    const serviceList = await Service.find();
+    // localhost:3000/api/v1/products?categories=2342342,234234
+    let filter = {};
+    if(req.query.categories)
+    {
+         filter = {category: req.query.categories.split(',')}
+    }
+
+    const serviceList = await Service.find(filter).populate('category');
 
     if(!serviceList) {
         res.status(500).json({success: false})
     } 
-    res.status(200).send(serviceList);
+    res.send(serviceList);
 })
+
+router.put('/:id',async (req, res)=> {
+
+   
+
+    const serv = await Service.findByIdAndUpdate(
+        req.params.id,
+        {
+            name: req.body.name,
+            price: req.body.price,
+            category: req.body.category,
+          },
+     )
+
+    if(!serv)
+    return res.status(400).send('the service cannot be created!')
+
+    res.send(serv);
+})
+
 
 router.get('/:id', async(req,res)=>{
     const service = await Service.findById(req.params.id);
@@ -23,7 +49,7 @@ router.get('/:id', async(req,res)=>{
     res.status(200).send(service);
 }) 
 
-
+ 
 router.post('/', async (req,res)=>{
 
 
@@ -57,7 +83,15 @@ router.delete('/:id', (req, res)=>{
     })
 })
 
-
+router.get(`/get/count`, async (req, res) =>{
+    const userCount = await Service.countDocuments()
+    if(!userCount) {
+        res.status(500).json({success: false})
+    } 
+    res.send({
+        userCount: userCount
+    });
+})
 
 
 

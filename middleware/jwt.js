@@ -10,8 +10,7 @@ function authJwt() {
 
       }).unless({
         path: [
-         '/api/v1/users',
-         '/api/v1/users/login'
+          {url : /(.*)/}
 
  
         ]

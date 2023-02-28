@@ -31,7 +31,21 @@ const storage = multer.diskStorage({
   const uploadOptions = multer({ storage: storage });
 
 
- 
+  router.get(`/`, async (req, res) =>{
+     let filter = {};
+    if(req.query.categories)
+    {
+         filter = {category: req.query.categories.split(',')}
+    }
+
+    const collaboraterList = await Collaborater.find(filter).populate('category');
+
+    if(!collaboraterList) {
+        res.status(500).json({success: false})
+    } 
+    res.send(collaboraterList);
+})
+
 
 router.get(`/`, async (req, res) =>{
     const collaboraterList = await Collaborater.find();
@@ -40,6 +54,26 @@ router.get(`/`, async (req, res) =>{
         res.status(500).json({success: false})
     } 
     res.status(200).send(collaboraterList);
+})
+
+
+router.get(`/:id`, async (req, res) =>{
+    const collab = await Collaborater.findById(req.params.id).populate('category');
+
+    if(!collab) {
+        res.status(500).json({success: false})
+    } 
+    res.send(collab);
+})
+
+router.get(`/get/count`, async (req, res) =>{
+    const userCount = await Collaborater.countDocuments()
+    if(!userCount) {
+        res.status(500).json({success: false})
+    } 
+    res.send({
+        userCount: userCount
+    });
 })
 
 
@@ -53,23 +87,23 @@ router.get('/:id', async(req,res)=>{
 }) 
 
 
-router.post('/',uploadOptions.single('image'), async (req,res)=>{
+router.post('/', async (req,res)=>{
     
     const category = await Category.findById(req.body.category);
     if (!category) return res.status(400).send('Invalid Category');
     const file = req.file;
-    if (!file) return res.status(400).send('No image in the request');
+    /*if (!file) return res.status(400).send('No image in the request');
 
 
     const fileName = req.file.filename
-   const basePath = `${req.protocol}://${req.get('host')}/public/uploads/`;
+   const basePath = `${req.protocol}://${req.get('host')}/public/uploads/`;*/
 
     let collaborater = new Collaborater({
         name: req.body.name,
         lastname: req.body.lastname,
         location: req.body.location,
         phone: req.body.phone,
-        image:`${basePath}${fileName}` ,
+        /*image:`${basePath}${fileName}`*/ 
         category: req.body.category,
     })
     collaborater = await collaborater.save();

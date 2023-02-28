@@ -45,4 +45,22 @@ router.delete('/:id', (req, res)=>{
        return res.status(500).json({success: false, error: err}) 
     })
 })
+router.put('/:id',async (req, res)=> {
+    const category = await Category.findByIdAndUpdate(
+        req.params.id,
+        {
+            name: req.body.name,
+            icon: req.body.icon,
+ 
+        },
+        { new: true}
+    )
+
+    if(!category)
+    return res.status(400).send('the category cannot be created!')
+
+    res.send(category);
+})
+
+
 module.exports =router;
